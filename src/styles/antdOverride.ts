@@ -1,33 +1,18 @@
 import { Theme, css } from 'antd-style';
-import { readableColor } from 'polished';
 
-export default (token: Theme) => css`
-  .ant-btn {
-    box-shadow: none;
-  }
-
-  .ant-popover {
+export default ({ token }: { prefixCls: string; token: Theme }) => css`
+  .${token.prefixCls}-popover {
     z-index: 1100;
   }
 
-  .ant-slider-track,
-  .ant-tabs-ink-bar,
-  .ant-switch-checked {
-    background: ${token.colorPrimary} !important;
+  .${token.prefixCls}-menu-sub.${token.prefixCls}-menu-vertical {
+    border: 1px solid ${token.colorBorder};
+    box-shadow: ${token.boxShadow};
   }
 
-  .ant-btn-primary:not(.ant-btn-dangerous) {
-    color: ${readableColor(token.colorPrimary)};
-    background: ${token.colorPrimary};
-
-    &:hover {
-      color: ${readableColor(token.colorPrimary)} !important;
-      background: ${token.colorPrimaryHover} !important;
-    }
-
-    &:active {
-      color: ${readableColor(token.colorPrimaryActive)} !important;
-      background: ${token.colorPrimaryActive} !important;
+  .${token.prefixCls}-menu-item-selected {
+    .${token.prefixCls}-menu-title-content {
+      color: ${token.colorText};
     }
   }
 `;

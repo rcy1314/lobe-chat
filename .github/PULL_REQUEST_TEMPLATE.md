@@ -4,9 +4,12 @@
 
 - [ ] ✨ feat
 - [ ] 🐛 fix
+- [ ] ♻️ refactor
 - [ ] 💄 style
-- [ ] 🔨 chore
+- [ ] 👷 build
+- [ ] ⚡️ perf
 - [ ] 📝 docs
+- [ ] 🔨 chore
 
 #### 🔀 变更说明 | Description of Change
 

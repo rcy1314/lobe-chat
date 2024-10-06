@@ -1,48 +1,78 @@
-import { DEFAULT_SETTINGS } from '@/const/settings';
-import type { GlobalSettings } from '@/types/settings';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
-export type SidebarTabKey = 'chat' | 'market' | 'settings';
+import { SessionDefaultGroup } from '@/types/session';
+import { AsyncLocalStorage } from '@/utils/localStorage';
 
-export type SettingsTabs = 'agent' | 'common' | 'llm';
-
-export interface Guide {
-  // Topic 引导
-  topic?: boolean;
+export enum SidebarTabKey {
+  Chat = 'chat',
+  Discover = 'discover',
+  Files = 'files',
+  Me = 'me',
+  Setting = 'settings',
 }
 
-export interface GlobalState {
-  /**
-   *  用户偏好的 UI 状态
-   *  @localStorage
-   */
-  preference: GlobalPreference;
-  /**
-   * @localStorage
-   * 用户设置
-   */
-  settings: GlobalSettings;
-  settingsTab?: SettingsTabs;
-  sidebarKey: SidebarTabKey;
+export enum ChatSettingsTabs {
+  Chat = 'chat',
+  Meta = 'meta',
+  Modal = 'modal',
+  Plugin = 'plugin',
+  Prompt = 'prompt',
+  TTS = 'tts',
 }
 
-export interface GlobalPreference {
-  guide?: Guide;
+export enum SettingsTabs {
+  About = 'about',
+  Agent = 'agent',
+  Common = 'common',
+  LLM = 'llm',
+  Sync = 'sync',
+  SystemAgent = 'system-agent',
+  TTS = 'tts',
+}
+
+export interface SystemStatus {
+  // which sessionGroup should expand
+  expandSessionGroupKeys: string[];
+  filePanelWidth: number;
+  hidePWAInstaller?: boolean;
   inputHeight: number;
+  mobileShowPortal?: boolean;
   mobileShowTopic?: boolean;
   sessionsWidth: number;
   showChatSideBar?: boolean;
+  showFilePanel?: boolean;
   showSessionPanel?: boolean;
+  showSystemRole?: boolean;
 }
 
+export interface GlobalState {
+  hasNewVersion?: boolean;
+  isMobile?: boolean;
+  isStatusInit?: boolean;
+  latestVersion?: string;
+  router?: AppRouterInstance;
+  sidebarKey: SidebarTabKey;
+  status: SystemStatus;
+  statusStorage: AsyncLocalStorage<SystemStatus>;
+}
+
+export const INITIAL_STATUS = {
+  expandSessionGroupKeys: [SessionDefaultGroup.Pinned, SessionDefaultGroup.Default],
+  filePanelWidth: 320,
+  hidePWAInstaller: false,
+  inputHeight: 200,
+  mobileShowTopic: false,
+  sessionsWidth: 320,
+  showChatSideBar: true,
+  showFilePanel: true,
+  showSessionPanel: true,
+  showSystemRole: false,
+} satisfies SystemStatus;
+
 export const initialState: GlobalState = {
-  preference: {
-    guide: {},
-    inputHeight: 200,
-    mobileShowTopic: false,
-    sessionsWidth: 320,
-    showChatSideBar: true,
-    showSessionPanel: true,
-  },
-  settings: DEFAULT_SETTINGS,
-  sidebarKey: 'chat',
+  isMobile: false,
+  isStatusInit: false,
+  sidebarKey: SidebarTabKey.Chat,
+  status: INITIAL_STATUS,
+  statusStorage: new AsyncLocalStorage('LOBE_SYSTEM_STATUS'),
 };

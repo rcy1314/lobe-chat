@@ -1,19 +1,48 @@
-import { css } from 'antd-style';
+import { Theme, css } from 'antd-style';
 
-export default () => css`
+// fix ios input keyboard
+// overflow: hidden;
+// ref: https://zhuanlan.zhihu.com/p/113855026
+export default ({ token }: { prefixCls: string; token: Theme }) => css`
+  html,
   body,
-  .ant-app {
-    ::-webkit-scrollbar {
-      width: 0;
-      height: 0;
+  #__next {
+    position: relative;
+
+    overscroll-behavior: none;
+
+    height: 100%;
+    min-height: 100dvh;
+    max-height: 100dvh;
+
+    background: ${token.colorBgLayout};
+
+    @media (min-device-width: 576px) {
+      overflow: hidden;
     }
   }
 
-  #__next {
-    height: 100%;
-  }
+  * {
+    scrollbar-color: ${token.colorFill} transparent;
+    scrollbar-width: thin;
 
-  p {
-    margin-bottom: 0;
+    ::-webkit-scrollbar {
+      width: 0.75em;
+      height: 0.75em;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+    }
+
+    :hover::-webkit-scrollbar-thumb {
+      background-color: ${token.colorText};
+      background-clip: content-box;
+      border: 3px solid transparent;
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
   }
 `;

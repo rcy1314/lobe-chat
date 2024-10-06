@@ -1,12 +1,9 @@
-import { ChatState, initialChatState } from './slices/chat/initialState';
 import { SessionState, initialSessionState } from './slices/session/initialState';
+import { SessionGroupState, initSessionGroupState } from './slices/sessionGroup/initialState';
 
-export type SessionStoreState = SessionState & ChatState;
+export interface SessionStoreState extends SessionGroupState, SessionState {}
 
 export const initialState: SessionStoreState = {
+  ...initSessionGroupState,
   ...initialSessionState,
-  ...initialChatState,
 };
-
-export { initialLobeAgentConfig } from './slices/agentConfig';
-export { initLobeSession } from './slices/session/initialState';
